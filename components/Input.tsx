@@ -5,13 +5,14 @@ interface Props {
   type: string
 }
 
-const Form: React.FC<Props> = ({question, type}) => {
+const Input: React.FC<Props> = ({question, type}) => {
   return (
-    <form>
+    <div className="w-full px-4 py-4">
       
-      <div className="flex">
+      <div className="flex items-center">
+
         {/* Question --> gets question from API */}
-        <label>
+        <label className="text-lg font-semibold mr-4">
           {question}
         </label>
 
@@ -19,13 +20,15 @@ const Form: React.FC<Props> = ({question, type}) => {
             If question type == Nominal, <input type="text">
             If question type == Continuos, <input type="number">
         */}
-        <input type={type}>
+        <input
+          className="flex items-center border-2 rounded-xl py-1 px-2 shadow-sm"
+          type={type}>
 
         </input>
       </div>
       
-    </form>
+    </div>
   )
 }
 
-export default Form
+export default Input

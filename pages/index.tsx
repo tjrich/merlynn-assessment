@@ -4,11 +4,15 @@ import Image from 'next/image'
 import Nav from '../components/Nav'
 import axios from "axios"
 import { useState, useEffect } from 'react'
-import Form from '../components/Form'
+import Input from '../components/Input'
 
 const Home: NextPage = () => {
 
-  let [apiData, setApiData] = useState([])
+  let [inputType, setInputType] = useState("")
+  let [apiData, setApiData] = useState({
+    name: "",
+    questions: [],
+  })
   let [error, setError] = useState({})
 
   useEffect(() => {
@@ -21,25 +25,40 @@ const Home: NextPage = () => {
     })
     .then(response => response.json())
     // .then(response => console.log(response.data.attributes.metadata.attributes))
-    .then(response => console.log(response.data))
-    // .then(res => setApiData(res.data))
+    .then(data => setApiData({
+      name: data.data.attributes.name,
+      questions: data.data.attributes.metadata.attributes
+    }))
     .catch(err => setError(err))
   }, [])
 
+  
   return (
     
     <>
-    <Nav/>
     <div className="w-full">
       <Head>
         <title>T Rich - Coding Assessment</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Nav/>
+      
+      <h1 className="text-lg font-semibold pl-2 py-2">
+        Model Name: {apiData.name}
+      </h1>
       {
-        apiData.length > 0 ? apiData.map(data => console.log(data))
+        apiData.questions.length > 0 ? 
+        apiData.questions.map(data =>
+          
+          // console.log(data)
+          <Input
+            key={data['name']}
+            question={data['question']}
+            type="text"
+          />
+        )
         : ('Loading API data...')
       }
-      {/* <Form/> */}
     </div>
     </>
   )
