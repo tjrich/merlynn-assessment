@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
-import Image from 'next/image';
+import React from 'react'
 
 const Nav = () => {
 
     return (
-        <nav className="select-none shadow-lg w-full sticky top-0 left-0">
+        <header className="select-none bg-blue-400 shadow-lg w-full fixed top-0 left-0">
             
-            <div className="pl-4 py-4 text-lg font-semibold">
+            <div className="pl-4 py-4 text-lg text-white font-semibold">
                 T RICH CODING ASSESSMENT
             </div>
             
-        </nav>
+        </header>
     )
 }
 

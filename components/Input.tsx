@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 
 interface Props {
   question: string,
@@ -6,23 +7,34 @@ interface Props {
 }
 
 const Input: React.FC<Props> = ({question, type}) => {
+
+  let [inputType, setInputType] = useState("text")
+
+  useEffect(() => {
+    if(type=="Continuous"){
+      setInputType("number")
+    }
+    else {
+      setInputType("text")
+    }
+  })
   return (
-    <div className="w-full px-4 py-4">
+    <div className="w-full px-4">
       
-      <div className="flex items-center">
+      <div className="items-center">
 
         {/* Question --> gets question from API */}
-        <label className="text-lg font-semibold mr-4">
+        <label className="text-md font-semibold">
           {question}
         </label>
 
         {/* Input --> gets input type from API 
             If question type == Nominal, <input type="text">
-            If question type == Continuos, <input type="number">
+            If question type == Continuous, <input type="number">
         */}
         <input
-          className="flex items-center border-2 rounded-xl py-1 px-2 shadow-sm"
-          type={type}>
+          className="flex items-center pl-2 border-2 rounded-xl mt-1 shadow-sm"
+          type={inputType}>
 
         </input>
       </div>

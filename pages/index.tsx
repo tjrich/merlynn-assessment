@@ -1,17 +1,16 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Nav from '../components/Nav'
-import axios from "axios"
 import { useState, useEffect } from 'react'
 import Input from '../components/Input'
 
 const Home: NextPage = () => {
 
-  let [inputType, setInputType] = useState("")
+  let [inputType, setInputType] = useState("text")
   let [apiData, setApiData] = useState({
     name: "",
     questions: [],
+    // questonsType: []
   })
   let [error, setError] = useState({})
 
@@ -27,7 +26,8 @@ const Home: NextPage = () => {
     // .then(response => console.log(response.data.attributes.metadata.attributes))
     .then(data => setApiData({
       name: data.data.attributes.name,
-      questions: data.data.attributes.metadata.attributes
+      questions: data.data.attributes.metadata.attributes,
+      // questonsType: data.data.attributes.metadata.attributes.type
     }))
     .catch(err => setError(err))
   }, [])
@@ -36,29 +36,34 @@ const Home: NextPage = () => {
   return (
     
     <>
-    <div className="w-full">
+    <div className="w-full h-full">
       <Head>
         <title>T Rich - Coding Assessment</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav/>
       
-      <h1 className="text-lg font-semibold pl-2 py-2">
+      <h1 className="text-lg font-semibold pt-5 pl-4 py-2 mt-14">
         Model Name: {apiData.name}
       </h1>
-      {
-        apiData.questions.length > 0 ? 
-        apiData.questions.map(data =>
-          
-          // console.log(data)
-          <Input
-            key={data['name']}
-            question={data['question']}
-            type="text"
-          />
-        )
-        : ('Loading API data...')
-      }
+
+      <div className="grid md:grid-cols-3 grid-cols-2 mx-8 my-5">
+        {
+          apiData.questions.length > 0 ? 
+          apiData.questions.map(data =>
+            // { 
+              // console.log(data)
+
+                <Input
+                  key={data['name']}
+                  question={data['question']}
+                  type={data['type']}//{(data['type']=='Continuos') ? "number" : "text"}
+                />
+            // }
+          )
+          : ('Loading API data...')
+        }
+      </div>
     </div>
     </>
   )
