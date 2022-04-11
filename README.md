@@ -11,7 +11,7 @@ git clone https://github.com/tjrich/merlynn-assessment.git
 ```bash
 npm i
 ```
-### Runn
+### Run
 ```bash
 npm run dev
 ```
