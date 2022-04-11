@@ -1,7 +1,10 @@
+// T RICH
+// MERLYNN CODING ASSESSMENT
+
 import React from 'react'
 import { useState, useEffect } from 'react'
 
-interface Props {
+interface Props { // Defines props and their types
   question: string,
   type: string,
   values: any,
@@ -12,6 +15,7 @@ interface Props {
 
 const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
 
+  // Declare State to store important information, passed via props
   let [apiInfo, setApiInfo] = useState({
     type: "",
     values: [],
@@ -22,19 +26,20 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
   let [inputs, setInputs] = useState({})
 
   useEffect(() => {
+    // Checks the type of model question
     if(type=="Continuous"){
       setApiInfo({
-        type: "number",
-        values: [],
+        type: "number", // Sets type which will be used for HTML input
+        values: [], // DomainR questions have no predetermined answers
         lower: lower,
         upper: upper
       })
     }
     else {
       setApiInfo({
-        type: "text",
-        values: values,
-        lower: 0,
+        type: "text", // Sets type which will be used for HTML input
+        values: values, // Stores predetermined answers for model question
+        lower: 0, // Randomly chosen values, only applicable to DomainR questions
         upper: 20
       })
     }
@@ -50,16 +55,6 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
     e.preventDefault()
     console.log(inputs)
   }
-
-  // const handle = (e: string) => {
-  //   let dataObj = {}
-  //   dataObj[e.target.id] = e.target.value
-  //   // const newdata = {...inputs}
-  //   // newdata[e.target.id] = e.target.value
-  //   // setInputs(e.target.id = e.target.value)
-  //   // console.log(newdata)
-  //   console.log(dataObj)
-  // }
   
   return (
     <div className="w-full px-4">
@@ -74,8 +69,12 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
 
         <div className="w-full">
         
+          {/* Conditional rendering for HTML input type */}
+          {/* If question.type == "Continuous" --> HTML input type="number" */}
+          {/* If question.type == "Nominal" --> HTML input type="text" */}
           {apiInfo.type == "number" ? 
             (
+              // HTML input type="number"
               <input
                 // onChange={(e: any) => console.log(e.target.value)}
                 // onChange={(e: any) => handle(e)}
@@ -90,12 +89,14 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
             )
             :
             ( 
+              // HTML input type="text"
               <select
                 // onChange={(e: any) => console.log(e.target.value)}
                 // onChange={(e: any) => handle(e)}
                 className="flex items-center border-2 rounded-xl mt-1 mb-2 pl-1 w-1/4" 
                 name={id} 
                 id={id}>
+                {/* Populates dropdown list with predetermined model answers */}
                 {
                   apiInfo['values'].map(value =>
                     <option

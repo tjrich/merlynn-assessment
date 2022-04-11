@@ -1,3 +1,6 @@
+// T RICH
+// MERLYNN CODING ASSESSMENT
+
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Nav from '../components/Nav'
@@ -6,28 +9,22 @@ import Input from '../components/Input'
 
 const Home: NextPage = () => {
 
+  // State to store some information received from the API endpoint
   let [apiData, setApiData] = useState({
     name: "",
     questions: [],
     domain: [],
   })
 
+  // To store decision made by the model
   let [decision, setDecision] = useState({
     decision: ""
   })
-  // let [inputs, setInputs] = useState([])
-    // "INPUTVAR1": 0,
-    // "INPUTVAR2": "",
-    // "INPUTVAR3": 0,
-    // "INPUTVAR4": "",
-    // "INPUTVAR5": "",
-    // "INPUTVAR6": "",
-    // "INPUTVAR7": "",
-    // "INPUTVAR8": 0,
-    // "INPUTVAR9": 0
   
   let [error, setError] = useState({})
 
+  // JSON message to be sent to the API decision endpoint
+  // Input values need to be populated based on user's answers
   let toPost = {
     "data": {
       "type": "scenario",
@@ -39,6 +36,7 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
+    // API call made to retrieve questions and possible answers
     fetch('https://api.up2tom.com/v3/models/58d3bcf97c6b1644db73ad12', {
       method: 'GET',
       headers: { 
@@ -48,33 +46,16 @@ const Home: NextPage = () => {
     })
     .then(response => response.json())
     .then(data => setApiData({
-      name: data.data.attributes.name,
-      questions: data.data.attributes.metadata.attributes,
-      domain: data.data.attributes.metadata.attributes.domain,
+      name: data.data.attributes.name, // Stores name of the model
+      questions: data.data.attributes.metadata.attributes, // Stores questions of the model
+      domain: data.data.attributes.metadata.attributes.domain, // Stores domain for each question
+                                                              // This contains possible answers, range, etc.
     }))
     .catch(err => setError(err))
   }, [])
 
-  // function handle(e: any){
-  //   // const newdata = {...inputs}
-  //   {...inputs, e.target.id} = e.target.value
-  //   // newdata[e.target.id] = e.target.value
-  //   // setInputs(newdata)
-  //   setInputs({...inputs, e.target.id = e.target.value})
-  //   console.log(newdata)
-  // }
-
-  // const handleChange = (e: any) => {
-  //   setInputs({
-  //     ...inputs = e.target.value
-  //   })
-  // }
-
-  // const handleSubmit = (e: any) => {
-  //   e.preventDefault()
-  //   console.log(inputs)
-  // }
-
+  // POST request to be made with user's answers
+  // API endpoint replies with a decision --> in this case a drink recommendation
   const submit = (e: any) => {
     e.preventDefault()
     fetch('https://api.up2tom.com/v3/decision/58d3bcf97c6b1644db73ad12', {
@@ -88,7 +69,7 @@ const Home: NextPage = () => {
     .then(response => response.json())
     // .then(res => console.log(res))
     .then(data => setDecision({
-      decision: data.data.attributes.decision,
+      decision: data.data.attributes.decision, // Stores the decision made by the model
     }))
   }
 
@@ -103,21 +84,19 @@ const Home: NextPage = () => {
       
       <h1 className="text-lg mx-8 font-semibold pt-5 mt-20 text-center border-2 p-4 rounded-lg shadow-md
                       hover:border-blue-400 transition-all ease-in-out">
-        Model Name: {apiData.name}
+        {/* Retrieve model name and displays it */}
+        Model Name: {apiData.name} 
       </h1>
 
       
       <form 
-        onSubmit={submit}
+        // onSubmit={submit}
         className="grid mx-8 my-4 border-2 p-4 rounded-lg shadow-md hover:border-blue-400
                         transition-all ease-in-out">
         {
           apiData.questions.length > 0 ? 
-          (apiData.questions.map(data =>
-            <Input
-              // onChange={(e: any) => handle(e)}
-              // onChange={(e: any) => console.log(e.target.value)}
-              // value={inputs[data['name']]}
+          (apiData.questions.map(data => // Loops through all the model questions
+            <Input                       // and populates the labels + input fields
               key={data['name']}
               id={data['name']}
               question={data['question']}
@@ -128,10 +107,10 @@ const Home: NextPage = () => {
             />
           ))
           : 
-          ('Loading API data...')
+          ('Loading API data...') // Placeholder to be shown when waiting on a response from the API
         }
         <button 
-                onSubmit={(e) => submit(e)}
+                // onSubmit={(e) => submit(e)}
                 className="bg-blue-500 text-white ml-4 mt-4 font-semibold text-lg w-24 rounded-xl
                               hover:shadow-xl transition-all ease-in-out active:scale-95">
           Submit
@@ -140,6 +119,7 @@ const Home: NextPage = () => {
 
       <div className="mx-8 my-5 border-2 p-4 rounded-lg shadow-md hover:border-blue-400
                       transition-all ease-in-out">
+        {/* Shows the decision made by the model */}
         <h1 className="text-lg font-semibold">
           Decision: {decision['decision']!="" ? (decision['decision']) : ("Awaiting API response...") }
         </h1>
