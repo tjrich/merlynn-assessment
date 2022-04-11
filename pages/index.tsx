@@ -32,8 +32,8 @@ const Home: NextPage = () => {
     "data": {
       "type": "scenario",
       "attributes": {
-        "input": [20, "Male", 24, "No", "Morning", "NA", "No", 1, 0]
-        // "input": []
+        // "input": [20, "Male", 24, "No", "Morning", "NA", "No", 1, 0]
+        "input": []
       }
     }
   }
