@@ -6,10 +6,11 @@ interface Props {
   type: string,
   values: Array<string>,
   lower: number,
-  upper: number
+  upper: number,
+  id: string
 }
 
-const Input: React.FC<Props> = ({question, type, values, lower, upper}) => {
+const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
 
   let [apiInfo, setApiInfo] = useState({
     type: "",
@@ -23,19 +24,19 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper}) => {
       setApiInfo({
         type: "number",
         values: [],
-        lower: 0,
-        upper: 20
+        lower: lower,
+        upper: upper
       })
     }
     else {
       setApiInfo({
         type: "text",
         values: values,
-        lower: lower,
-        upper: upper
+        lower: 0,
+        upper: 20
       })
     }
-  })
+  }, [])
   return (
     <div className="w-full px-4">
       
@@ -51,11 +52,11 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper}) => {
             If question type == Continuous, <input type="number">
         */}
         <input
-          className="flex items-center pl-2 border-2 rounded-xl mt-1 shadow-sm"
+          className="flex items-center pl-2 border-2 rounded-xl mt-1 mb-2 shadow-sm"
+          id={id}
           type={apiInfo["type"]}
           min={apiInfo["lower"]}
           max={apiInfo["upper"]}
-          title="Test"
         >
           
         </input>
