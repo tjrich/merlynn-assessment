@@ -12,11 +12,11 @@ git clone https://github.com/tjrich/merlynn-assessment.git
 ```
 ### Installation
 ```bash
-/merlynn-assessment/$ npm i
+~/$ npm i
 ```
 ### Run
 ```bash
-/merlynn-assessment/$ npm run dev
+~/$ npm run dev
 ```
 ### Live Deployment
 
