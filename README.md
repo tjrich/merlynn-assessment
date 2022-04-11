@@ -18,7 +18,10 @@ git clone https://github.com/tjrich/merlynn-assessment.git
 ```bash
 /merlynn-assessment/$ npm run dev
 ```
+### Live Deployment
 
+Alternatively you can view the live deployment, hosted on [Vercel](https://www.vercel.com).
+The deployment can be found [here](https://merlynn-assessment.vercel.app/)
 ## Addtional Information
 
 Unfortunately I was not able to complete the entire assessment within the time given due to
