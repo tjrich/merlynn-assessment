@@ -65,17 +65,17 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
             :
             ( 
               <select
-                className="flex items-center border-2 rounded-xl mt-1 mb-2 pl-2 w-1/4" 
+                className="flex items-center border-2 rounded-xl mt-1 mb-2 pl-1 w-1/4" 
                 name={id} 
                 id={id}>
                 {
                   apiInfo['values'].map(value =>
                     <option
-                      key={value} 
-                      id={id} 
-                      value={value} 
-                      defaultValue={value}>
-                        {value}
+                      key={value}
+                      id={id}
+                      value={value}
+                    >
+                      {value}
                     </option>
                   )
                 }

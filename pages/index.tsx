@@ -10,27 +10,18 @@ const Home: NextPage = () => {
     name: "",
     questions: [],
     domain: [],
-    id: {}
   })
-  // let [inputs, setInputs] = useState({
-  //   "INPUTVAR1": 0,
-  //   "INPUTVAR2": "",
-  //   "INPUTVAR3": 0,
-  //   "INPUTVAR4": "",
-  //   "INPUTVAR5": "",
-  //   "INPUTVAR6": "",
-  //   "INPUTVAR7": "",
-  //   "INPUTVAR8": 0,
-  //   "INPUTVAR9": 0,
-  // })
+
+  let [decision, setDecision] = useState({})
+  let [inputs, setInputs] = useState({})
   let [error, setError] = useState({})
 
   let toPost = {
     "data": {
       "type": "scenario",
       "attributes": {
-        // "input": [20, "Male", 24, "No", "Morning", "NA", "No", 1, 0]
-        "input": []
+        "input": [20, "Male", 24, "No", "Morning", "NA", "No", 1, 0]
+        // "input": []
       }
     }
   }
@@ -48,7 +39,6 @@ const Home: NextPage = () => {
       name: data.data.attributes.name,
       questions: data.data.attributes.metadata.attributes,
       domain: data.data.attributes.metadata.attributes.domain,
-      id: data.data.attributes.metadata.attributes.name+""
     }))
     .catch(err => setError(err))
   }, [])
@@ -60,19 +50,20 @@ const Home: NextPage = () => {
   //   console.log(newdata)
   // }
 
-  // async function submit(e){
-  //   e.preventDefault()
-  //   await fetch('https://api.up2tom.com/v3/models/58d3bcf97c6b1644db73ad12', {
-  //     method: 'POST',
-  //     headers: { 
-  //       'Authorization': 'Token 9307bfd5fa011428ff198bb37547f979', 
-  //       'Content-Type': 'application/vnd.api+json'
-  //     },
-  //     body: JSON.stringify(toPost)
-  //   })
-  //   .then(response => response.json())
-  //   .then(res => console.log(res))
-  // }
+  async function submit(e: any){
+    e.preventDefault()
+    await fetch('https://api.up2tom.com/v3/models/58d3bcf97c6b1644db73ad12', {
+      method: 'POST',
+      headers: { 
+        'Authorization': 'Token 9307bfd5fa011428ff198bb37547f979', 
+        'Content-Type': 'application/vnd.api+json'
+      },
+      body: JSON.stringify(toPost)
+    })
+    .then(response => response.json())
+    // .then(res => console.log(res))
+    .then(data => setDecision(data))
+  }
 
   return (
     <>
@@ -83,12 +74,12 @@ const Home: NextPage = () => {
       </Head>
       <Nav/>
       
-      <h1 className="text-lg font-semibold pt-5 pl-4 py-2 mt-14">
+      <h1 className="text-lg font-semibold pt-5 mt-14 text-center">
         Model Name: {apiData.name}
       </h1>
 
       
-      <form className="grid mx-8 my-5">
+      <form className="grid mx-8 my-4 border-2 p-4 rounded-lg shadow-md">
         {
           apiData.questions.length > 0 ? 
           (apiData.questions.map(data =>
@@ -97,8 +88,8 @@ const Home: NextPage = () => {
             // console.log(data)
 
             <Input
-              // onChange={(e) => handle(e)}
-              // value={inputs[{data.name}]}
+              onChange={(e: any) => setInputs(e.target.value)}
+              value={inputs}
               key={data['name']}
               id={data['name']}
               question={data['question']}
@@ -108,19 +99,22 @@ const Home: NextPage = () => {
               upper={data['domain']['upper']}
             />
           ))
-          : ('Loading API data...')
+          : 
+          ('Loading API data...')
         }
         <button 
-                // onSubmit={(e) => submit(e)}
+                onSubmit={(e) => submit(e)}
                 className="bg-blue-500 text-white ml-4 mt-4 font-semibold text-lg w-24 rounded-xl
                               hover:shadow-xl transition-all ease-in-out active:scale-95">
           Submit
         </button>
       </form>
 
-      <h1 className="text-lg font-semibold pt-5 pl-4 py-2 mt-4">
-        Decision: 
-      </h1>
+      <div className="mx-8 my-5 border-2 p-4 rounded-lg shadow-md">
+        <h1 className="text-lg font-semibold">
+          Decision: 
+        </h1>
+      </div>
     </div>
     </>
   )
