@@ -3,19 +3,37 @@ import { useState, useEffect } from 'react'
 
 interface Props {
   question: string,
-  type: string
+  type: string,
+  values: Array<string>,
+  lower: number,
+  upper: number
 }
 
-const Input: React.FC<Props> = ({question, type}) => {
+const Input: React.FC<Props> = ({question, type, values, lower, upper}) => {
 
-  let [inputType, setInputType] = useState("text")
+  let [apiInfo, setApiInfo] = useState({
+    type: "",
+    values: [],
+    lower: -10,
+    upper: 90
+  })
 
   useEffect(() => {
     if(type=="Continuous"){
-      setInputType("number")
+      setApiInfo({
+        type: "number",
+        values: [],
+        lower: 0,
+        upper: 20
+      })
     }
     else {
-      setInputType("text")
+      setApiInfo({
+        type: "text",
+        values: values,
+        lower: lower,
+        upper: upper
+      })
     }
   })
   return (
@@ -34,8 +52,12 @@ const Input: React.FC<Props> = ({question, type}) => {
         */}
         <input
           className="flex items-center pl-2 border-2 rounded-xl mt-1 shadow-sm"
-          type={inputType}>
-
+          type={apiInfo["type"]}
+          min={apiInfo["lower"]}
+          max={apiInfo["upper"]}
+          title="Test"
+        >
+          
         </input>
       </div>
       

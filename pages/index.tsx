@@ -6,11 +6,10 @@ import Input from '../components/Input'
 
 const Home: NextPage = () => {
 
-  let [inputType, setInputType] = useState("text")
   let [apiData, setApiData] = useState({
     name: "",
     questions: [],
-    // questonsType: []
+    domain: []
   })
   let [error, setError] = useState({})
 
@@ -23,18 +22,15 @@ const Home: NextPage = () => {
       }
     })
     .then(response => response.json())
-    // .then(response => console.log(response.data.attributes.metadata.attributes))
     .then(data => setApiData({
       name: data.data.attributes.name,
       questions: data.data.attributes.metadata.attributes,
-      // questonsType: data.data.attributes.metadata.attributes.type
+      domain: data.data.attributes.metadata.attributes.domain
     }))
     .catch(err => setError(err))
   }, [])
 
-  
   return (
-    
     <>
     <div className="w-full h-full">
       <Head>
@@ -51,15 +47,13 @@ const Home: NextPage = () => {
         {
           apiData.questions.length > 0 ? 
           apiData.questions.map(data =>
-            // { 
-              // console.log(data)
+            console.log(data)
 
-                <Input
-                  key={data['name']}
-                  question={data['question']}
-                  type={data['type']}//{(data['type']=='Continuos') ? "number" : "text"}
-                />
-            // }
+            // <Input
+            //   key={data['name']}
+            //   question={data['question']}
+            //   type={data['type']}//{(data['type']=='Continuos') ? "number" : "text"}
+            // />
           )
           : ('Loading API data...')
         }
