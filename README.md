@@ -22,5 +22,5 @@ git clone https://github.com/tjrich/merlynn-assessment.git
 ## Addtional Information
 
 Unfortunately I was not able to complete the entire assessment within the time given due to
-work and religious commitments. Therefore no additional features or functionality was added,
-only Task 1a is working.
+work and religious commitments. No additional features or functionality was added,
+only Task 1a is functional.
