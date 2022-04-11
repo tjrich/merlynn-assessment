@@ -19,6 +19,8 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
     upper: 90
   })
 
+  let [inputs, setInputs] = useState({})
+
   useEffect(() => {
     if(type=="Continuous"){
       setApiInfo({
@@ -38,6 +40,27 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
     }
   }, [])
 
+  const handleChange = (e: any) => {
+    setInputs({
+      ...inputs// = e.target.value
+    })
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    console.log(inputs)
+  }
+
+  // const handle = (e: string) => {
+  //   let dataObj = {}
+  //   dataObj[e.target.id] = e.target.value
+  //   // const newdata = {...inputs}
+  //   // newdata[e.target.id] = e.target.value
+  //   // setInputs(e.target.id = e.target.value)
+  //   // console.log(newdata)
+  //   console.log(dataObj)
+  // }
+  
   return (
     <div className="w-full px-4">
       
@@ -50,9 +73,12 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
         </div>
 
         <div className="w-full">
+        
           {apiInfo.type == "number" ? 
             (
               <input
+                // onChange={(e: any) => console.log(e.target.value)}
+                // onChange={(e: any) => handle(e)}
                 className="flex items-center pl-2 border-2 rounded-xl mt-1 mb-2 shadow-sm w-1/4"
                 id={id}
                 type={apiInfo["type"]}
@@ -65,6 +91,8 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
             :
             ( 
               <select
+                // onChange={(e: any) => console.log(e.target.value)}
+                // onChange={(e: any) => handle(e)}
                 className="flex items-center border-2 rounded-xl mt-1 mb-2 pl-1 w-1/4" 
                 name={id} 
                 id={id}>

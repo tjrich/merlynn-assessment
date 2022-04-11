@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   let [decision, setDecision] = useState({
     decision: ""
   })
-  let [inputs, setInputs] = useState([]
+  // let [inputs, setInputs] = useState([])
     // "INPUTVAR1": 0,
     // "INPUTVAR2": "",
     // "INPUTVAR3": 0,
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     // "INPUTVAR7": "",
     // "INPUTVAR8": 0,
     // "INPUTVAR9": 0
-  )
+  
   let [error, setError] = useState({})
 
   let toPost = {
@@ -64,6 +64,17 @@ const Home: NextPage = () => {
   //   console.log(newdata)
   // }
 
+  // const handleChange = (e: any) => {
+  //   setInputs({
+  //     ...inputs = e.target.value
+  //   })
+  // }
+
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault()
+  //   console.log(inputs)
+  // }
+
   const submit = (e: any) => {
     e.preventDefault()
     fetch('https://api.up2tom.com/v3/decision/58d3bcf97c6b1644db73ad12', {
@@ -80,9 +91,7 @@ const Home: NextPage = () => {
       decision: data.data.attributes.decision,
     }))
   }
-  function test (val: any){
-    console.log(val)
-  }
+
   return (
     <>
     <div className="w-full h-full">
@@ -92,7 +101,8 @@ const Home: NextPage = () => {
       </Head>
       <Nav/>
       
-      <h1 className="text-lg font-semibold pt-5 mt-14 text-center">
+      <h1 className="text-lg mx-8 font-semibold pt-5 mt-20 text-center border-2 p-4 rounded-lg shadow-md
+                      hover:border-blue-400 transition-all ease-in-out">
         Model Name: {apiData.name}
       </h1>
 
@@ -105,9 +115,9 @@ const Home: NextPage = () => {
           apiData.questions.length > 0 ? 
           (apiData.questions.map(data =>
             <Input
-              onChange={(e: any) => handle(e)}
-              // onChange={(e: any) => setInputs({...inputs, data['name']: e.target.value})}
-              value={inputs[data['name']]}
+              // onChange={(e: any) => handle(e)}
+              // onChange={(e: any) => console.log(e.target.value)}
+              // value={inputs[data['name']]}
               key={data['name']}
               id={data['name']}
               question={data['question']}

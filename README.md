@@ -6,12 +6,21 @@ Built using React.js, Next.js & Tailwind CSS
 ```bash
 git clone https://github.com/tjrich/merlynn-assessment.git
 ```
-
+### Change directory
+```bash
+/$ cd merlynn-assessment
+```
 ### Installation
 ```bash
-npm i
+/merlynn-assessment/$ npm i
 ```
 ### Run
 ```bash
-npm run dev
+/merlynn-assessment/$ npm run dev
 ```
+
+## Addtional Information
+
+Unfortunately I was not able to complete the entire assessment within the time given due to
+work and religious commitments. Therefore no additional features or functionality was added,
+only Task 1a is working.
