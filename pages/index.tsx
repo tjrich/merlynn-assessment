@@ -10,7 +10,7 @@ const Home: NextPage = () => {
     name: "",
     questions: [],
     domain: [],
-    id: []
+    id: {}
   })
   // let [inputs, setInputs] = useState({
   //   "INPUTVAR1": 0,
@@ -29,7 +29,8 @@ const Home: NextPage = () => {
     "data": {
       "type": "scenario",
       "attributes": {
-        "input": [20, "Male", 24, "No", "Morning", "NA", "No", 1, 0]
+        // "input": [20, "Male", 24, "No", "Morning", "NA", "No", 1, 0]
+        "input": []
       }
     }
   }
@@ -47,7 +48,7 @@ const Home: NextPage = () => {
       name: data.data.attributes.name,
       questions: data.data.attributes.metadata.attributes,
       domain: data.data.attributes.metadata.attributes.domain,
-      id: data.data.attributes.metadata.attributes.name
+      id: data.data.attributes.metadata.attributes.name+""
     }))
     .catch(err => setError(err))
   }, [])
@@ -59,19 +60,19 @@ const Home: NextPage = () => {
   //   console.log(newdata)
   // }
 
-  async function submit(e){
-    e.preventDefault()
-    await fetch('https://api.up2tom.com/v3/models/58d3bcf97c6b1644db73ad12', {
-      method: 'POST',
-      headers: { 
-        'Authorization': 'Token 9307bfd5fa011428ff198bb37547f979', 
-        'Content-Type': 'application/vnd.api+json'
-      },
-      body: JSON.stringify(toPost)
-    })
-    .then(response => response.json())
-    .then(res => console.log(res))
-  }
+  // async function submit(e){
+  //   e.preventDefault()
+  //   await fetch('https://api.up2tom.com/v3/models/58d3bcf97c6b1644db73ad12', {
+  //     method: 'POST',
+  //     headers: { 
+  //       'Authorization': 'Token 9307bfd5fa011428ff198bb37547f979', 
+  //       'Content-Type': 'application/vnd.api+json'
+  //     },
+  //     body: JSON.stringify(toPost)
+  //   })
+  //   .then(response => response.json())
+  //   .then(res => console.log(res))
+  // }
 
   return (
     <>
@@ -91,6 +92,8 @@ const Home: NextPage = () => {
         {
           apiData.questions.length > 0 ? 
           apiData.questions.map(data =>
+
+            // data['domain']['type'] == 'DomainC' ? console.log(data['domain']['value']) : console.log("NA")
             // console.log(data)
 
             <Input

@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react'
 interface Props {
   question: string,
   type: string,
-  values: Array<string>,
+  values: any,
   lower: number,
   upper: number,
-  id: string
+  id: string,
 }
 
 const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
@@ -37,31 +37,39 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
       })
     }
   }, [])
+
   return (
     <div className="w-full px-4">
       
       <div className="items-center">
 
-        {/* Question --> gets question from API */}
-        <label className="text-md font-semibold">
-          {question}
-        </label>
+      <label className="text-md font-semibold">
+        {question}
+      </label>
 
-        {/* Input --> gets input type from API 
-            If question type == Nominal, <input type="text">
-            If question type == Continuous, <input type="number">
-        */}
-        <input
-          className="flex items-center pl-2 border-2 rounded-xl mt-1 mb-2 shadow-sm"
-          id={id}
-          type={apiInfo["type"]}
-          min={apiInfo["lower"]}
-          max={apiInfo["upper"]}
-        >
-          
-        </input>
+      {apiInfo.type == "number" ? 
+        (
+          <input
+            className="flex items-center pl-2 border-2 rounded-xl mt-1 mb-2 shadow-sm"
+            id={id}
+            type={apiInfo["type"]}
+            min={apiInfo["lower"]}
+            max={apiInfo["upper"]}
+          >
+          </input> 
+        )
+        :
+        ( 
+          <select name={id} id={id}>
+            {
+              apiInfo['values'].map(value =>
+                <option key={value} id={id} value={value} defaultValue={value}>{value}</option>
+              )
+            }
+          </select>
+        )
+      }
       </div>
-      
     </div>
   )
 }
