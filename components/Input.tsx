@@ -58,6 +58,7 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
                 type={apiInfo["type"]}
                 min={apiInfo["lower"]}
                 max={apiInfo["upper"]}
+                placeholder={apiInfo["lower"]}
               >
               </input> 
             )

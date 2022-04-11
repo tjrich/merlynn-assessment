@@ -91,7 +91,7 @@ const Home: NextPage = () => {
       <form className="grid mx-8 my-5">
         {
           apiData.questions.length > 0 ? 
-          apiData.questions.map(data =>
+          (apiData.questions.map(data =>
 
             // data['domain']['type'] == 'DomainC' ? console.log(data['domain']['value']) : console.log("NA")
             // console.log(data)
@@ -107,7 +107,7 @@ const Home: NextPage = () => {
               lower={data['domain']['lower']}
               upper={data['domain']['upper']}
             />
-          )
+          ))
           : ('Loading API data...')
         }
         <button 
@@ -117,6 +117,10 @@ const Home: NextPage = () => {
           Submit
         </button>
       </form>
+
+      <h1 className="text-lg font-semibold pt-5 pl-4 py-2 mt-4">
+        Decision: 
+      </h1>
     </div>
     </>
   )
