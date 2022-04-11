@@ -12,18 +12,20 @@ const Home: NextPage = () => {
     domain: [],
   })
 
-  let [decision, setDecision] = useState("")
-  let [inputs, setInputs] = useState({
-    "INPUTVAR1": 0,
-    "INPUTVAR2": "",
-    "INPUTVAR3": 0,
-    "INPUTVAR4": "",
-    "INPUTVAR5": "",
-    "INPUTVAR6": "",
-    "INPUTVAR7": "",
-    "INPUTVAR8": 0,
-    "INPUTVAR9": 0
+  let [decision, setDecision] = useState({
+    decision: ""
   })
+  let [inputs, setInputs] = useState([]
+    // "INPUTVAR1": 0,
+    // "INPUTVAR2": "",
+    // "INPUTVAR3": 0,
+    // "INPUTVAR4": "",
+    // "INPUTVAR5": "",
+    // "INPUTVAR6": "",
+    // "INPUTVAR7": "",
+    // "INPUTVAR8": 0,
+    // "INPUTVAR9": 0
+  )
   let [error, setError] = useState({})
 
   let toPost = {
@@ -53,16 +55,18 @@ const Home: NextPage = () => {
     .catch(err => setError(err))
   }, [])
 
-  function handle(e){
-    const newdata = {...inputs}
-    newdata[e.target.id] = e.target.value
-    setInputs(newdata)
-    console.log(newdata)
-  }
+  // function handle(e: any){
+  //   // const newdata = {...inputs}
+  //   {...inputs, e.target.id} = e.target.value
+  //   // newdata[e.target.id] = e.target.value
+  //   // setInputs(newdata)
+  //   setInputs({...inputs, e.target.id = e.target.value})
+  //   console.log(newdata)
+  // }
 
-  async function submit(e: any){
+  const submit = (e: any) => {
     e.preventDefault()
-    await fetch('https://api.up2tom.com/v3/models/58d3bcf97c6b1644db73ad12', {
+    fetch('https://api.up2tom.com/v3/decision/58d3bcf97c6b1644db73ad12', {
       method: 'POST',
       headers: { 
         'Authorization': 'Token 9307bfd5fa011428ff198bb37547f979', 
@@ -72,9 +76,13 @@ const Home: NextPage = () => {
     })
     .then(response => response.json())
     // .then(res => console.log(res))
-    .then(data => setDecision(data))
+    .then(data => setDecision({
+      decision: data.data.attributes.decision,
+    }))
   }
-
+  function test (val: any){
+    console.log(val)
+  }
   return (
     <>
     <div className="w-full h-full">
@@ -89,13 +97,16 @@ const Home: NextPage = () => {
       </h1>
 
       
-      <form className="grid mx-8 my-4 border-2 p-4 rounded-lg shadow-md hover:border-blue-400
+      <form 
+        onSubmit={submit}
+        className="grid mx-8 my-4 border-2 p-4 rounded-lg shadow-md hover:border-blue-400
                         transition-all ease-in-out">
         {
           apiData.questions.length > 0 ? 
           (apiData.questions.map(data =>
             <Input
               onChange={(e: any) => handle(e)}
+              // onChange={(e: any) => setInputs({...inputs, data['name']: e.target.value})}
               value={inputs[data['name']]}
               key={data['name']}
               id={data['name']}
@@ -120,7 +131,7 @@ const Home: NextPage = () => {
       <div className="mx-8 my-5 border-2 p-4 rounded-lg shadow-md hover:border-blue-400
                       transition-all ease-in-out">
         <h1 className="text-lg font-semibold">
-          Decision: {decision!="" ? (decision) : ("Awaiting API response...") }
+          Decision: {decision['decision']!="" ? (decision['decision']) : ("Awaiting API response...") }
         </h1>
       </div>
     </div>

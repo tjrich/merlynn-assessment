@@ -41,7 +41,7 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
   return (
     <div className="w-full px-4">
       
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center">
 
         <div className="w-1/2">
           <label className="text-md font-semibold">
@@ -58,7 +58,7 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
                 type={apiInfo["type"]}
                 min={apiInfo["lower"]}
                 max={apiInfo["upper"]}
-                placeholder={apiInfo["lower"]}
+                placeholder={String(apiInfo["lower"])}
               >
               </input> 
             )
