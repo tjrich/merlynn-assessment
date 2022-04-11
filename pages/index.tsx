@@ -88,7 +88,7 @@ const Home: NextPage = () => {
       </h1>
 
       
-      <form className="grid md:grid-cols-3 grid-cols-2 mx-8 my-5">
+      <form className="grid mx-8 my-5">
         {
           apiData.questions.length > 0 ? 
           apiData.questions.map(data =>

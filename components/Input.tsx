@@ -41,34 +41,47 @@ const Input: React.FC<Props> = ({question, type, values, lower, upper, id}) => {
   return (
     <div className="w-full px-4">
       
-      <div className="items-center">
+      <div className="flex items-center space-x-2">
 
-      <label className="text-md font-semibold">
-        {question}
-      </label>
+        <div className="w-1/2">
+          <label className="text-md font-semibold">
+            {question}
+          </label>
+        </div>
 
-      {apiInfo.type == "number" ? 
-        (
-          <input
-            className="flex items-center pl-2 border-2 rounded-xl mt-1 mb-2 shadow-sm"
-            id={id}
-            type={apiInfo["type"]}
-            min={apiInfo["lower"]}
-            max={apiInfo["upper"]}
-          >
-          </input> 
-        )
-        :
-        ( 
-          <select name={id} id={id}>
-            {
-              apiInfo['values'].map(value =>
-                <option key={value} id={id} value={value} defaultValue={value}>{value}</option>
-              )
-            }
-          </select>
-        )
-      }
+        <div className="w-full">
+          {apiInfo.type == "number" ? 
+            (
+              <input
+                className="flex items-center pl-2 border-2 rounded-xl mt-1 mb-2 shadow-sm w-1/4"
+                id={id}
+                type={apiInfo["type"]}
+                min={apiInfo["lower"]}
+                max={apiInfo["upper"]}
+              >
+              </input> 
+            )
+            :
+            ( 
+              <select
+                className="flex items-center border-2 rounded-xl mt-1 mb-2 pl-2 w-1/4" 
+                name={id} 
+                id={id}>
+                {
+                  apiInfo['values'].map(value =>
+                    <option
+                      key={value} 
+                      id={id} 
+                      value={value} 
+                      defaultValue={value}>
+                        {value}
+                    </option>
+                  )
+                }
+              </select>
+            )
+          }
+        </div>
       </div>
     </div>
   )
