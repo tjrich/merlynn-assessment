@@ -24,6 +24,5 @@ Alternatively you can view the live deployment, hosted on [Vercel](https://www.v
 The deployment can be found [here](https://merlynn-assessment.vercel.app/)
 ## Addtional Information
 
-Unfortunately I was not able to complete the entire assessment within the time given due to
-work and religious commitments. No additional features or functionality was added,
-only Task 1a is functional.
+Unfortunately I was not able to complete the entire assessment within the prescribe time, therefore, 
+no additional features or functionality was added. only Task 1a is functional.
