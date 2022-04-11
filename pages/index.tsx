@@ -12,8 +12,18 @@ const Home: NextPage = () => {
     domain: [],
   })
 
-  let [decision, setDecision] = useState({})
-  let [inputs, setInputs] = useState({})
+  let [decision, setDecision] = useState("")
+  let [inputs, setInputs] = useState({
+    "INPUTVAR1": 0,
+    "INPUTVAR2": "",
+    "INPUTVAR3": 0,
+    "INPUTVAR4": "",
+    "INPUTVAR5": "",
+    "INPUTVAR6": "",
+    "INPUTVAR7": "",
+    "INPUTVAR8": 0,
+    "INPUTVAR9": 0
+  })
   let [error, setError] = useState({})
 
   let toPost = {
@@ -43,12 +53,12 @@ const Home: NextPage = () => {
     .catch(err => setError(err))
   }, [])
 
-  // function handle(e){
-  //   const newdata = {...inputs}
-  //   newdata[e.target.id] = e.target.value
-  //   setInputs(newdata)
-  //   console.log(newdata)
-  // }
+  function handle(e){
+    const newdata = {...inputs}
+    newdata[e.target.id] = e.target.value
+    setInputs(newdata)
+    console.log(newdata)
+  }
 
   async function submit(e: any){
     e.preventDefault()
@@ -79,17 +89,14 @@ const Home: NextPage = () => {
       </h1>
 
       
-      <form className="grid mx-8 my-4 border-2 p-4 rounded-lg shadow-md">
+      <form className="grid mx-8 my-4 border-2 p-4 rounded-lg shadow-md hover:border-blue-400
+                        transition-all ease-in-out">
         {
           apiData.questions.length > 0 ? 
           (apiData.questions.map(data =>
-
-            // data['domain']['type'] == 'DomainC' ? console.log(data['domain']['value']) : console.log("NA")
-            // console.log(data)
-
             <Input
-              onChange={(e: any) => setInputs(e.target.value)}
-              value={inputs}
+              onChange={(e: any) => handle(e)}
+              value={inputs[data['name']]}
               key={data['name']}
               id={data['name']}
               question={data['question']}
@@ -110,9 +117,10 @@ const Home: NextPage = () => {
         </button>
       </form>
 
-      <div className="mx-8 my-5 border-2 p-4 rounded-lg shadow-md">
+      <div className="mx-8 my-5 border-2 p-4 rounded-lg shadow-md hover:border-blue-400
+                      transition-all ease-in-out">
         <h1 className="text-lg font-semibold">
-          Decision: 
+          Decision: {decision!="" ? (decision) : ("Awaiting API response...") }
         </h1>
       </div>
     </div>
